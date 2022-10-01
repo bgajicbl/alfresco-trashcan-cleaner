@@ -19,13 +19,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.atolcd.alfresco</groupId>
   <artifactId>trashcan-cleaner</artifactId>
-  <version>2.0.1-SNAPSHOT</version>
+  <version>2.0.1-c</version>
   <packaging>amp</packaging>
   <name>Trashcan cleaner module</name>
   <description>Alfresco module which automatically empties the trashcan</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <alfresco.version>4.2.e</alfresco.version>
+    <alfresco.version>5.0.d</alfresco.version>
     <alfresco-maven.version>1.1.2</alfresco-maven.version>
     <!-- Older Alfresco versions compatibility -->
     <alfresco.groupId>org.alfresco</alfresco.groupId>
@@ -34,19 +34,35 @@
   <repositories>
     <repository>
       <id>alfresco-public</id>
-      <url>http://artifacts.alfresco.com/nexus/content/groups/public</url>
+      <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>maven-repo</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository><repository>
+      <id>emergya-repo</id>
+      <url>https://nexus.emergya.es/nexus/content/repositories/public</url>
     </repository>
   </repositories>
-
+  <pluginRepositories>
+    <pluginRepository>
+      <id>mavencentral</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>spring-releases</id>
+      <url>https://repo.spring.io/release</url>
+    </pluginRepository>
+  </pluginRepositories>
   <distributionManagement>
     <repository>
       <id>nexus-releases</id>
-      <url>http://nexus/content/repositories/releases/</url>
+      <url>https://nexus/content/repositories/releases/</url>
       <name>Releases</name>
     </repository>
     <snapshotRepository>
       <id>nexus-snapshots</id>
-      <url>http://nexus/content/repositories/snapshots/</url>
+      <url>https://nexus/content/repositories/snapshots/</url>
       <name>Snapshots</name>
     </snapshotRepository>
   </distributionManagement>

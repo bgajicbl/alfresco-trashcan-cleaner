@@ -14,6 +14,7 @@ public class TrashcanCleanerJob extends AbstractScheduledLockedJob {
     JobDataMap jobData = context.getJobDetail().getJobDataMap();
     // extract the content cleaner to use
     Object trashcanCleanerObj = jobData.get("trashcanCleaner");
+    System.out.println("*********** Starting TrashcanCleanerJob **********");
     if (trashcanCleanerObj == null || !(trashcanCleanerObj instanceof TrashcanCleaner)) {
       throw new AlfrescoRuntimeException(
           "TrashcanCleanerJob data must contain valid 'trashcanCleaner' reference");

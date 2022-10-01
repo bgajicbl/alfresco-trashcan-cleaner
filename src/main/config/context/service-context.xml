@@ -22,6 +22,9 @@
     <property name="protectedDays">
       <value>${trashcan.cleaner.protected.day}</value>
     </property>
+    <property name="batchNumber">
+      <value>${trashcan.cleaner.batch.number}</value>
+    </property>
     <property name="storeUrl">
       <value>archive://SpacesStore</value>
     </property>
