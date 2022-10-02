@@ -67,11 +67,16 @@ public class TrashcanCleaner {
 
     private List<NodeRef> fillBatchToDelete(List<NodeRef> batch, List<ChildAssociationRef> trashChildAssocs) {
         for (int j = trashChildAssocs.size(); j > 0 && batch.size() < this.deleteBatchCount; --j) {
-            ChildAssociationRef childAssoc = (ChildAssociationRef) trashChildAssocs.get(j - 1);
-            NodeRef childRef = childAssoc.getChildRef();
-            if (this.olderThanDaysToKeep(childRef)) {
-                batch.add(childRef);
+            try {
+                ChildAssociationRef childAssoc = (ChildAssociationRef) trashChildAssocs.get(j - 1);
+                NodeRef childRef = childAssoc.getChildRef();
+                if (this.olderThanDaysToKeep(childRef)) {
+                    batch.add(childRef);
+                }
+            } catch (Exception e) {
+                System.out.println("--------------- fillBatchToDelete exception: " + e.getMessage());
             }
+
         }
 
         return batch;
@@ -81,8 +86,13 @@ public class TrashcanCleaner {
         if (this.protectedDays <= 0) {
             return true;
         } else {
-            Date archivedDate = (Date) this.nodeService.getProperty(node, ContentModel.PROP_ARCHIVED_DATE);
-            return (long) this.protectedDays * 86400000L < System.currentTimeMillis() - archivedDate.getTime();
+            try {
+                Date archivedDate = (Date) this.nodeService.getProperty(node, ContentModel.PROP_ARCHIVED_DATE);
+                return (long) this.protectedDays * 86400000L < System.currentTimeMillis() - archivedDate.getTime();
+            } catch (Exception e) {
+                System.out.println("--------------- olderThanDaysToKeep exception: " + e.getMessage());
+                return false;
+            }
         }
     }
 
@@ -125,6 +135,7 @@ public class TrashcanCleaner {
 
                 tx.commit();
             } catch (Throwable err) {
+                System.out.println("--------------- Error while cleaning the trashcan: " + err.getMessage());
                 if (logger.isWarnEnabled()) {
                     logger.warn("Error while cleaning the trashcan: "
                             + err.getMessage());
@@ -134,6 +145,7 @@ public class TrashcanCleaner {
                         tx.rollback();
                     }
                 } catch (Exception tex) {
+                    System.out.println("--------------- Error during the rollback: " + tex.getMessage());
                     if (logger.isWarnEnabled()) {
                         logger.warn("Error during the rollback: "
                                 + tex.getMessage());
